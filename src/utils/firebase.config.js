@@ -2,6 +2,8 @@
 import firebase from "firebase/compat/app";
 import { getAnalytics } from "firebase/analytics";
 import "firebase/compat/auth";
+// création de la base de donnée
+import { getFirestore } from "@firebase/firestore";
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -19,3 +21,5 @@ const analytics = getAnalytics(app);
 
 export const auth = app.auth();
 export default app;
+// export de la base de donnée
+export const db = getFirestore();
