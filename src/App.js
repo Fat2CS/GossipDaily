@@ -4,23 +4,23 @@ import ConnectModal from "./components/ConnectModal";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./utils/firebase.config";
 import { useEffect } from "react";
-import { getDocs } from "firebase/firestore";
-import { collection } from "firebase/firestore";
-import { db } from "./utils/firebase.config";
+
 import Post from "./components/Post";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "./actions/post.action";
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState([]);
+  // pour recuperer les posts et surtout pour qu'il se mette à jour
+  const posts = useSelector((state) => state.postReducer);
+  const dispatch = useDispatch();
   // Dans auth tu va regarder si un utilisateur est là
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
   });
   // permet de read nos elements avec le methodes getsDocs
   useEffect(() => {
-    getDocs(collection(db, "posts")).then((res) =>
-      setPosts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    );
+    dispatch(getPosts());
   }, []);
   const handlelogout = async () => {
     await signOut(auth);
