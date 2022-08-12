@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Post from "./components/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "./actions/post.action";
+import { Headerlogo } from "./components/Headerlogo";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -27,6 +28,7 @@ const App = () => {
   };
   return (
     <div>
+      <Headerlogo />
       <div className="app-header">
         {user && (
           <div className="user-infos">
